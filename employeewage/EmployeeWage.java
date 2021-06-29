@@ -2,48 +2,39 @@ package employeewage;
 
 public class EmployeeWage {
 	public static void main(String[] args){
-		checkAttendance employee = new checkAttendance();
-		employee.isPresent();
-	    }
+		EmployeeWage e = new EmployeeWage();
+		e.employeeWage();	
 	}
-
-class checkAttendance extends calculateWage{
-	//Computation
-	int check;
-	static int days = 0;
-	static int workHrs = 0;
-	static int totalWorkHrs = 0;
-void isPresent(){
-    int wage = 0;
-    int totalWage = 0;
-    while ( days != 20 && totalWorkHrs <= 100 ) {
-        days++;
-        System.out.println(days);
-        check = (int)(Math.floor(Math.random() * 10) % 3);
-        switch(check) {
-            case 0:
-                workHrs = 8;
-                break;
-            case 1:
-                workHrs = 4;
-                break;
-            default:
-                workHrs = 0;
-                break;
-        }
-        totalWorkHrs = totalWorkHrs + workHrs;
-        wage = dailyWage(workHrs);
-        totalWage = totalWage + wage;
-    }
-    System.out.println("Total earning of employee for a month is "+totalWage);
+	void employeeWage() {
+		final int max_working_hrs = 100;
+		final int days_in_month=20;
+		final int wage_per_hr = 20;
+		int working_hr = 0;
+		int total_working_hr = 0;
+		int monthly_total_wage = 0;
+		int is_fulltime_present = 1;
+		int is_parttime_present = 2;
+		int daily_wage_array[] = new int[20];
+		for (int i=0; i<days_in_month && total_working_hr<max_working_hrs; i++) {
+			int emp_check = (int)(Math.floor(Math.random() * 10)) % 3;
+			switch (emp_check) {
+				case 1:
+					working_hr = 8;
+					break;
+				case 2:
+					working_hr = 4;
+					break;
+				default:
+					working_hr = 0;
+			}
+			total_working_hr += working_hr;
+			daily_wage_array[i] = working_hr * wage_per_hr;
+		}
+		for (int j=0; j<days_in_month; j++) {
+			int day = j+1;
+			System.out.println("Day " + day + " wage is " + daily_wage_array[j]);
+			monthly_total_wage = monthly_total_wage + daily_wage_array[j];
+		}
+		System.out.println("\nMonthly wage is " + monthly_total_wage);
+	}
 }
-}
-            
-            
-//Wage computation 
-class calculateWage {
-    	final int wagePerHr = 20;
-    	int dailyWage(int workHr){
-    		return wagePerHr * workHr;
-        }
-    }
